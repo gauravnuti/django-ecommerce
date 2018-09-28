@@ -1,0 +1,8 @@
+<li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown06" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown06">
+              {% for c in categories %}
+        <a class="dropdown-item" href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+              {% endfor %}
+            </div>
+</li>

@@ -1,0 +1,149 @@
+{% extends "shop/bas2.html" %}
+{% load static %}
+{% load shop_filters %}
+
+{% block content %}
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">{{ product.name|capfirst }}</h1>
+        <!-- <p class="lead text-muted mb-0">Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500...</p> -->
+    </div>
+</section>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url "shop:product_list" %}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ product.category.get_absolute_url }}">Category</a></li>
+                    <li class="breadcrumb-item active" aria-current="">Product</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <!-- Image -->
+        <div class="col-12 col-lg-6">
+            <div class="card bg-light mb-3">
+                <div class="card-body">
+                    <a href="" data-toggle="modal" data-target="#productModal">
+                        <img class="img-fluid" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/Gormenghast.jpg" %}{% endif %}" height="800" width="800" />
+                        <p class="text-center">Zoom</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add to cart -->
+        <div class="col-12 col-lg-6 add_to_cart_block">
+            <div class="card bg-light mb-3">
+                <div class="card-body">
+                    <p class="price">${{ product.price }}</p>
+                    <p>Category: <a href="{{ product.category.get_absolute_url }}">{{ product.name|capfirst }}</a></p>
+                    <!-- <p class="price_discounted">${{ product.price }} </p> -->
+                    <!-- <form method="get" action="cart.html">
+                        <div class="form-group">
+                            <label for="colors">Color</label>
+                            <select class="custom-select" id="colors">
+                                <option selected>Select</option>
+                                <option value="1">Blue</option>
+                                <option value="2">Red</option>
+                                <option value="3">Green</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            {{ form.non_field_errors }}
+                            <div class="fieldWrapper">
+                                {{ form.quantity.errors }}
+                            <label for="{{ form.quantity.id_for_label }}">Quantity :</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button type="button" class="quantity-left-minus btn btn-danger btn-number"  data-type="minus" data-field="">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                                <input type="text" class="form-control"  id="quantity" name="quantity" min="1" max="100" value="1">
+                                {{ form.quantity }}
+                                <div class="input-group-append">
+                                    <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus" data-field="">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <a href="cart.html" class="btn btn-success btn-lg btn-block text-uppercase">
+                            <i class="fa fa-shopping-cart"></i> Add To Cart
+                        </a>
+                    </form> -->
+                    <form method="post" action="." class="cart">
+                         <div class="form-group">
+                            {{ form.non_field_errors }}
+                            <div class="fieldWrapper">
+                                {{ form.quantity.errors }}
+                            <label for="{{ form.quantity.id_for_label }}">Quantity :</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button type="button" class="quantity-left-minus btn btn-danger btn-number"  data-type="minus" data-field="">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                                <!-- <input type="text" class="form-control"  id="quantity" name="quantity" min="1" max="100" value="1"> -->
+                                {{ form.quantity }}
+                                <div class="input-group-append">
+                                    <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus" data-field="">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="fieldWrapper">
+    {{ form.product_slug.errors }}
+    {{ form.product_slug }}
+            </div>
+
+                        <br>
+                <input type="submit" value="Add To Cart" name="submit" alt="Add To Cart" class="btn btn-success btn-lg btn-block text-uppercase"/>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Description -->
+        <div class="col-12">
+            <div class="card border-light mb-3">
+                <div class="card-header bg-primary text-white text-uppercase"><i class="fa fa-align-justify"></i> Description</div>
+                <div class="card-body">
+                    <p class="card-text">
+                        {{ product.description }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal image -->
+<div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productModalLabel">Product title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img class="img-fluid" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/Gormenghast.jpg" %}{% endif %}" height="1200" width="1200" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
