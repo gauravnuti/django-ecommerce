@@ -1,2 +1,2 @@
 # django-ecommerce
-Hello
+Hello sudo
