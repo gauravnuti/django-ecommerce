@@ -1,2 +1,2 @@
 # django-ecommerce
-Hello
+E-Commerce website using Django Framework and SQL Database.
